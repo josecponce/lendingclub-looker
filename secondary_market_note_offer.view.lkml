@@ -9,12 +9,12 @@ view: secondary_market_note_offer {
 
   dimension: grade {
     type: string
-    sql: SUBTRING(${loan_class}, 0, 1);;
+    sql: SUBSTRING(${loan_class}, 0, 1);;
   }
 
   dimension: sub_grade {
     type: string
-    sql: SUBTRING(${loan_class}, 1, 1);;
+    sql: SUBSTRING(${loan_class}, 1, 1);;
   }
 
   #table fields
