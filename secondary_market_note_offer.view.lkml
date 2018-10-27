@@ -77,7 +77,7 @@ view: secondary_market_note_offer {
   }
 
   dimension: never_late {
-    type: string
+    type: yesno
     sql: ${TABLE}.never_late ;;
   }
 
