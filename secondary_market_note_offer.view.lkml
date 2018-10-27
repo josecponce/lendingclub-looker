@@ -1,6 +1,11 @@
 view: secondary_market_note_offer {
   sql_table_name: lendingclub.secondary_market_note_offer ;;
 
+  dimension: payments_made {
+    type: number
+    sql: ${loan_maturity} - ${remaining_payments} ;;
+  }
+
   dimension: accrued_interest {
     type: number
     sql: ${TABLE}.accrued_interest ;;
