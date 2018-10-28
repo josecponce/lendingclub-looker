@@ -9,12 +9,19 @@ view: secondary_market_note_offer {
 
   dimension: grade {
     type: string
-    sql: SUBSTRING(${loan_class}, 0, 1);;
+    sql: SUBSTRING(${loan_class}, 1, 1);;
   }
 
   dimension: sub_grade {
     type: string
-    sql: SUBSTRING(${loan_class}, 1, 1);;
+    sql: SUBSTRING(${loan_class}, 2, 1);;
+  }
+
+  dimension: ytm_range {
+    type: tier
+    style: interval
+    tiers: [-30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30]
+    sql: ${ytm};;
   }
 
   #table fields
@@ -79,7 +86,7 @@ view: secondary_market_note_offer {
   }
 
   dimension: loan_id {
-    type: number
+    type: string
     sql: ${TABLE}.loan_id ;;
   }
 
@@ -99,12 +106,21 @@ view: secondary_market_note_offer {
   }
 
   dimension: note_id {
-    type: number
+    type: string
     sql: ${TABLE}.note_id ;;
   }
 
   dimension: order_id {
-    type: number
+    type: string
+    link: {
+      label: "offer details"
+      url: "https://www.lendingclub.com/foliofn/browseNotesLoanPerf.action?showfoliofn=true&loan_id={{loan_id._value}}&order_id={{value}}&note_id={{note_id._value}}"
+    }
+    link: {
+      label: "original loan details"
+      url: "https://www.lendingclub.com/foliofn/loanDetail.action?loan_id={{loan_id._value}}"
+    }
+
     sql: ${TABLE}.order_id ;;
   }
 
@@ -136,6 +152,17 @@ view: secondary_market_note_offer {
   dimension: ytm {
     type: number
     sql: ${TABLE}.ytm ;;
+  }
+
+  #measures
+  measure: m_outstanding_principal {
+    type: sum
+    sql: ${outstanding_principal} ;;
+  }
+
+  measure: m_ytm {
+    type: sum
+    sql: ${ytm} ;;
   }
 
   measure: count {
