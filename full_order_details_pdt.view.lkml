@@ -123,6 +123,10 @@ view: full_order_details_pdt {
         field: loan_entity.fico_range_high
       }
 
+      column: loan_loan_id {
+        field: loan_entity.id
+      }
+
       derived_column: fico_change_since_loan_orig_low {
         sql: fico_end_range_from - orig_fico_range_low ;;
       }
@@ -134,6 +138,11 @@ view: full_order_details_pdt {
 
     indexes: ["order_id", "loan_id", "status", "fico_end_range_from"]
     persist_for: "60 minutes"
+  }
+
+  dimension: loan_loan_id {
+    type: number
+    sql: ${TABLE}.loan_loan_id ;;
   }
 
   dimension: payments_made {
