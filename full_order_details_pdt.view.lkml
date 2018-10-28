@@ -133,7 +133,7 @@ view: full_order_details_pdt {
     }
 
     indexes: ["order_id", "loan_id", "status", "fico_end_range_from"]
-    persist_for: "5 minutes"
+    persist_for: "60 minutes"
   }
 
   dimension: payments_made {
