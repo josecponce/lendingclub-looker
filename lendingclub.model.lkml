@@ -12,6 +12,8 @@ explore: secondary_market_note_offer {
 
 explore: full_order_details_pdt { }
 
+explore: loan_entity {}
+
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.
 #

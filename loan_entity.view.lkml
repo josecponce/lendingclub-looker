@@ -1,6 +1,12 @@
 view: loan_entity {
   sql_table_name: lendingclub.loan_entity ;;
 
+  measure: months_to_last_payment {
+    type: average
+    sql: TIMESTAMPDIFF(MONTH, DATE_FORMAT(STR_TO_DATE(${TABLE}.issue_d, '%M-%Y'), '%Y-%m-01'), DATE_FORMAT(STR_TO_DATE(${TABLE}.last_pymnt_d, '%M-%Y'), '%Y-%m-01')) ;;
+  }
+
+
   dimension: id {
     primary_key: yes
     type: number
@@ -294,7 +300,7 @@ view: loan_entity {
 
   dimension: loan_status {
     type: string
-    sql: ${TABLE}.loan_status ;;
+    sql: REPLACE(${TABLE}.loan_status, 'Does not meet the credit policy. Status:', '') ;;
   }
 
   dimension: max_bal_bc {
@@ -760,5 +766,11 @@ view: loan_entity {
   measure: count {
     type: count
     drill_fields: [id]
+  }
+
+  measure: percent {
+    type: percent_of_total
+    value_format: "000.00"
+    sql: ${count} ;;
   }
 }
