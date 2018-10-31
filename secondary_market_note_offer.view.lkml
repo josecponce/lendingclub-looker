@@ -40,6 +40,11 @@ view: secondary_market_note_offer {
     sql: ${TABLE}.ask_price ;;
   }
 
+  measure: sum_ask_price {
+    type: sum
+    sql: ${ask_price} ;;
+  }
+
   dimension: credit_score_trend {
     type: string
     sql: ${TABLE}.credit_score_trend ;;
