@@ -45,6 +45,11 @@ view: secondary_market_note_offer {
     sql: ${ask_price} ;;
   }
 
+  measure: min_ask_price {
+    type: min
+    sql: ${ask_price} ;;
+  }
+
   dimension: credit_score_trend {
     type: string
     sql: ${TABLE}.credit_score_trend ;;

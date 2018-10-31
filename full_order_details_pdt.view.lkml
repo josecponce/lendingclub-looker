@@ -38,6 +38,10 @@ view: full_order_details_pdt {
         field: secondary_market_note_offer.sum_ask_price
       }
 
+      column: min_ask_price {
+        field: secondary_market_note_offer.min_ask_price
+      }
+
       column: credit_score_trend {
         field: secondary_market_note_offer.credit_score_trend
       }
@@ -348,6 +352,11 @@ view: full_order_details_pdt {
 
   measure: sum_ask_price {
     type: sum
-    sql: ${ask_price} ;;
+    sql: ${TABLE}.sum_ask_price ;;
+  }
+
+  measure: min_ask_price {
+    type: min
+    sql: ${TABLE}.min_ask_price ;;
   }
 }
