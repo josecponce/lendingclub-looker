@@ -3,6 +3,9 @@ include: "lendingclub.model.lkml"
 view: full_order_details_pdt {
   derived_table: {
     explore_source: secondary_market_note_offer {
+      column: months_since_issue_date {
+        field: loan_entity.months_since_issue_date
+      }
       column: payments_made {
         field: secondary_market_note_offer.payments_made
       }
@@ -115,6 +118,10 @@ view: full_order_details_pdt {
         field: secondary_market_note_offer.m_ytm
       }
 
+      column: max_ytm {
+        field: secondary_market_note_offer.max_ytm
+      }
+
       column: orig_fico_range_low {
         field: loan_entity.fico_range_low
       }
@@ -125,6 +132,10 @@ view: full_order_details_pdt {
 
       column: loan_loan_id {
         field: loan_entity.id
+      }
+
+      column: purpose {
+        field: loan_entity.purpose
       }
 
       derived_column: fico_change_since_loan_orig_low {
@@ -242,6 +253,7 @@ view: full_order_details_pdt {
   }
 
   dimension: order_id {
+    primary_key: yes
     type: string
     link: {
       label: "offer details"
@@ -290,9 +302,17 @@ view: full_order_details_pdt {
   }
 
   measure: m_ytm {
-    type: sum
+    type: average
+    value_format: "#.##"
     sql: ${TABLE}.m_ytm ;;
   }
+
+  measure: max_ytm {
+    type: max
+    value_format: "#.##"
+    sql: ${ytm} ;;
+  }
+
 
   dimension: orig_fico_range_low {
     sql: ${TABLE}.orig_fico_range_low;;
@@ -310,5 +330,15 @@ view: full_order_details_pdt {
   dimension: fico_change_since_loan_orig_high {
     type: number
     sql: ${TABLE}.fico_change_since_loan_orig_high ;;
+  }
+
+  dimension: months_since_issue_date {
+    type: number
+    sql:  ${TABLE}.months_since_issue_date ;;
+  }
+
+  dimension: purpose {
+    type: string
+    sql: ${TABLE}.purpose ;;
   }
 }

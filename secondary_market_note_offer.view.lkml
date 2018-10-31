@@ -111,6 +111,7 @@ view: secondary_market_note_offer {
   }
 
   dimension: order_id {
+    primary_key: yes
     type: string
     link: {
       label: "offer details"
@@ -161,7 +162,14 @@ view: secondary_market_note_offer {
   }
 
   measure: m_ytm {
-    type: sum
+    type: average
+    value_format: "#.##"
+    sql: ${ytm} ;;
+  }
+
+  measure: max_ytm {
+    type: max
+    value_format: "#.##"
     sql: ${ytm} ;;
   }
 

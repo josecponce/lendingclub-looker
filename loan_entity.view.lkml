@@ -1,11 +1,26 @@
 view: loan_entity {
   sql_table_name: lendingclub.loan_entity ;;
 
-  measure: months_to_last_payment {
-    type: average
+  dimension: months_to_last_payment {
+    type: number
     sql: TIMESTAMPDIFF(MONTH, DATE_FORMAT(STR_TO_DATE(${TABLE}.issue_d, '%M-%Y'), '%Y-%m-01'), DATE_FORMAT(STR_TO_DATE(${TABLE}.last_pymnt_d, '%M-%Y'), '%Y-%m-01')) ;;
   }
 
+  dimension: months_since_issue_date {
+    type: number
+    sql: TIMESTAMPDIFF(MONTH, DATE_FORMAT(STR_TO_DATE(${TABLE}.issue_d, '%M-%Y'), '%Y-%m-01'), DATE_FORMAT(CURDATE(), '%Y-%m-01')) ;;
+  }
+
+  measure: average_months_to_last_payment {
+    type: average
+    sql: ${months_to_last_payment} ;;
+  }
+
+  measure: 75_percentile_months_to_last_payment {
+    type: percentile
+    percentile: 75
+    sql: ${months_to_last_payment} ;;
+  }
 
   dimension: id {
     primary_key: yes
@@ -123,9 +138,29 @@ view: loan_entity {
     sql: ${TABLE}.dti_joint ;;
   }
 
-  dimension: earliest_cr_line {
-    type: string
-    sql: ${TABLE}.earliest_cr_line ;;
+  dimension_group: earliest_credit_line {
+    type: time
+    datatype: date
+    timeframes: [
+      raw,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    sql: STR_TO_DATE(${TABLE}.earliest_cr_line, '%M-%Y') ;;
+  }
+
+  dimension: months_since_earliest_credit_line {
+    type: number
+    sql: TIMESTAMPDIFF(MONTH, DATE_FORMAT(${earliest_credit_line_raw}, '%Y-%m-01'), DATE_FORMAT(CURDATE(), '%Y-%m-01')) ;;
+  }
+
+  dimension: months_since_earlies_credit_line_tier {
+    type: tier
+    tiers: [0, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120]
+    style: integer
+    sql: ${months_since_earliest_credit_line} ;;
   }
 
   dimension: emp_length {
@@ -263,9 +298,17 @@ view: loan_entity {
     sql: ${TABLE}.int_rate ;;
   }
 
-  dimension: issue_d {
-    type: string
-    sql: ${TABLE}.issue_d ;;
+  dimension_group: issue_d {
+    type: time
+    datatype: date
+    timeframes: [
+      raw,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    sql: STR_TO_DATE(${TABLE}.issue_d, '%M-%Y') ;;
   }
 
   dimension: last_credit_pull_d {
@@ -339,8 +382,15 @@ view: loan_entity {
   }
 
   dimension: mths_since_last_delinq {
-    type: string
-    sql: ${TABLE}.mths_since_last_delinq ;;
+    type: number
+    sql: COALESCE(${TABLE}.mths_since_last_delinq, 200) ;;
+  }
+
+  dimension: mths_since_last_delinq_tier {
+    type: tier
+    tiers: [0, 10, 20, 30, 40, 50, 60, 70, 80]
+    style: integer
+    sql: ${mths_since_last_delinq} ;;
   }
 
   dimension: mths_since_last_major_derog {
@@ -514,7 +564,14 @@ view: loan_entity {
   }
 
   dimension: percent_bc_gt_75 {
-    type: string
+    type: number
+    sql: ${TABLE}.percent_bc_gt_75 ;;
+  }
+
+  dimension: percent_bc_gt_75_tier {
+    type: tier
+    tiers: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    style: interval
     sql: ${TABLE}.percent_bc_gt_75 ;;
   }
 
@@ -529,7 +586,7 @@ view: loan_entity {
   }
 
   dimension: pub_rec_bankruptcies {
-    type: string
+    type: number
     sql: ${TABLE}.pub_rec_bankruptcies ;;
   }
 
@@ -559,8 +616,15 @@ view: loan_entity {
   }
 
   dimension: revol_util {
-    type: string
-    sql: ${TABLE}.revol_util ;;
+    type: number
+    sql: REPLACE(${TABLE}.revol_util, '%', '') ;;
+  }
+
+  dimension: revol_util_tier {
+    type: tier
+    tiers: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    style: interval
+    sql: REPLACE(${TABLE}.revol_util, '%', '') ;;
   }
 
   dimension: sec_app_chargeoff_within_12_mths {
@@ -654,7 +718,7 @@ view: loan_entity {
   }
 
   dimension: tax_liens {
-    type: string
+    type: number
     sql: ${TABLE}.tax_liens ;;
   }
 
