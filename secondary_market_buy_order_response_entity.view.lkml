@@ -43,7 +43,7 @@ view: secondary_market_buy_order_response_entity {
   }
 
   dimension: txn_id {
-    type: number
+    type: string
     sql: ${TABLE}.txn_id ;;
   }
 

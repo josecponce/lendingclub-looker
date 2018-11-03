@@ -416,7 +416,7 @@ view: full_order_details_pdt {
   }
 
   dimension: buy_response_txn_id {
-    type: number
+    type: string
     sql: ${TABLE}.buy_response_txn_id ;;
   }
 
@@ -437,5 +437,10 @@ view: full_order_details_pdt {
       year
     ]
     sql: ${TABLE}.buy_order_created ;;
+  }
+
+  measure: count {
+    type: count
+    drill_fields: []
   }
 }

@@ -19,7 +19,6 @@ explore: secondary_market_note_offer {
     sql_on: ${secondary_market_buy_order_entity.id} = ${secondary_market_buy_order_response_entity.buy_order_id} ;;
   }
 }
-
 explore: full_order_details_pdt { }
 
 explore: loan_entity {}
