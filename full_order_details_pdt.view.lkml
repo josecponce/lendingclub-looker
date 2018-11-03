@@ -186,7 +186,7 @@ view: full_order_details_pdt {
     }
 
     indexes: ["order_id", "loan_id", "status", "fico_end_range_from"]
-    persist_for: "60 minutes"
+    sql_trigger_value: select concat(concat((select max(modified) from secondary_market_note_offer), '_'), (select max(created) from secondary_market_buy_order_entity));;
   }
 
   dimension: loan_loan_id {
