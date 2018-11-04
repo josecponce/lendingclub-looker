@@ -48,13 +48,18 @@ view: loan_entity {
     sql: ${TABLE}.all_util ;;
   }
 
-  dimension: annual_inc {
-    type: string
+  dimension: monthly_income_combined {
+    type: number
+    sql: GREATEST(${annual_income}, ${annual_income_joint}) ;;
+  }
+
+  dimension: annual_income {
+    type: number
     sql: ${TABLE}.annual_inc ;;
   }
 
-  dimension: annual_inc_joint {
-    type: string
+  dimension: annual_income_joint {
+    type: number
     sql: ${TABLE}.annual_inc_joint ;;
   }
 

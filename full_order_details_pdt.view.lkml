@@ -146,6 +146,18 @@ view: full_order_details_pdt {
         field: loan_entity.purpose
       }
 
+      column: monthly_income_combined {
+        field: loan_entity.monthly_income_combined
+      }
+
+      column: annual_income {
+        field: loan_entity.annual_income
+      }
+
+      column: annual_income_joint {
+        field: loan_entity.annual_income_joint
+      }
+
       derived_column: fico_change_since_loan_orig_low {
         sql: fico_end_range_from - orig_fico_range_low ;;
       }
@@ -352,6 +364,21 @@ view: full_order_details_pdt {
   dimension: purpose {
     type: string
     sql: ${TABLE}.purpose ;;
+  }
+
+  dimension: monthly_income_combined {
+    type: number
+    sql: ${TABLE}.monthly_income_combined ;;
+  }
+
+  dimension: annual_income {
+    type: number
+    sql: ${TABLE}.annual_income ;;
+  }
+
+  dimension: annual_income_joint {
+    type: number
+    sql: ${TABLE}.annual_income_joint ;;
   }
 
   measure: sum_ask_price {
