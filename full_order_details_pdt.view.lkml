@@ -153,40 +153,10 @@ view: full_order_details_pdt {
       derived_column: fico_change_since_loan_orig_high {
         sql: fico_end_range_to - orig_fico_range_high ;;
       }
-
-      #secondary_market_buy_order_response_entity
-      column: buy_response_bid_price {
-        field: loan_secondary_market_buy_order_response_entity.bid_price
-      }
-
-      column: buy_response_execution_status {
-        field: loan_secondary_market_buy_order_response_entity.execution_status
-      }
-
-      column: buy_response_outstanding_accrued_interest {
-        field: loan_secondary_market_buy_order_response_entity.outstanding_accrued_interest
-      }
-
-      column: buy_response_outstanding_principal {
-        field: loan_secondary_market_buy_order_response_entity.outstanding_principal
-      }
-
-      column: buy_response_txn_id {
-        field: loan_secondary_market_buy_order_response_entity.txn_id
-      }
-
-      column: buy_response_yield_to_maturity {
-        field: loan_secondary_market_buy_order_response_entity.yield_to_maturity
-      }
-
-      #secondary_market_buy_order_entity
-      column: buy_order_created {
-        field: loan_secondary_market_buy_order_entity.created_raw
-      }
     }
 
     indexes: ["order_id", "loan_id", "status", "fico_end_range_from"]
-    sql_trigger_value: select concat(concat((select max(modified) from secondary_market_note_offer), '_'), (select max(created) from secondary_market_buy_order_entity));;
+    sql_trigger_value: select concat(concat(coalesce((select max(created) from load_control_entity where datagroup = 'loan'),'none'), '_'), coalesce((select max(created) from load_control_entity where datagroup = 'secondary_market_note_offer'), 'none')) ;;
   }
 
   dimension: loan_loan_id {
@@ -392,51 +362,6 @@ view: full_order_details_pdt {
   measure: min_ask_price {
     type: min
     sql: ${TABLE}.min_ask_price ;;
-  }
-
-  #secondary_market_buy_order_response_entity
-  dimension: buy_response_bid_price {
-    type: number
-    sql: ${TABLE}.buy_response_bid_price ;;
-  }
-
-  dimension: buy_response_execution_status {
-    type: string
-    sql: ${TABLE}.buy_response_execution_status ;;
-  }
-
-  dimension: buy_response_outstanding_accrued_interest {
-    type: number
-    sql: ${TABLE}.buy_response_outstanding_accrued_interest ;;
-  }
-
-  dimension:buy_response_outstanding_principal {
-    type: number
-    sql: ${TABLE}.buy_response_outstanding_principal ;;
-  }
-
-  dimension: buy_response_txn_id {
-    type: string
-    sql: ${TABLE}.buy_response_txn_id ;;
-  }
-
-  dimension: buy_response_yield_to_maturity {
-    type: number
-    sql: ${TABLE}.buy_response_yield_to_maturity ;;
-  }
-
-  dimension_group: buy_order_created {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    sql: ${TABLE}.buy_order_created ;;
   }
 
   measure: count {

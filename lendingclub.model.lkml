@@ -19,7 +19,19 @@ explore: secondary_market_note_offer {
     sql_on: ${loan_secondary_market_buy_order_entity.id} = ${loan_secondary_market_buy_order_response_entity.buy_order_id} ;;
   }
 }
-explore: full_order_details_pdt { }
+
+explore: full_order_details_pdt {
+  join: loan_secondary_market_buy_order_entity {
+    from: secondary_market_buy_order_entity
+    relationship: one_to_many
+    sql_on: ${full_order_details_pdt.loan_id} = ${loan_secondary_market_buy_order_entity.loan_id} ;;
+  }
+  join: loan_secondary_market_buy_order_response_entity {
+    from: secondary_market_buy_order_response_entity
+    relationship: one_to_one
+    sql_on: ${loan_secondary_market_buy_order_entity.id} = ${loan_secondary_market_buy_order_response_entity.buy_order_id} ;;
+  }
+}
 
 explore: loan_entity {}
 
