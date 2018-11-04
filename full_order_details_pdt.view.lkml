@@ -156,32 +156,32 @@ view: full_order_details_pdt {
 
       #secondary_market_buy_order_response_entity
       column: buy_response_bid_price {
-        field: secondary_market_buy_order_response_entity.bid_price
+        field: loan_secondary_market_buy_order_response_entity.bid_price
       }
 
       column: buy_response_execution_status {
-        field: secondary_market_buy_order_response_entity.execution_status
+        field: loan_secondary_market_buy_order_response_entity.execution_status
       }
 
       column: buy_response_outstanding_accrued_interest {
-        field: secondary_market_buy_order_response_entity.outstanding_accrued_interest
+        field: loan_secondary_market_buy_order_response_entity.outstanding_accrued_interest
       }
 
       column: buy_response_outstanding_principal {
-        field: secondary_market_buy_order_response_entity.outstanding_principal
+        field: loan_secondary_market_buy_order_response_entity.outstanding_principal
       }
 
       column: buy_response_txn_id {
-        field: secondary_market_buy_order_response_entity.txn_id
+        field: loan_secondary_market_buy_order_response_entity.txn_id
       }
 
       column: buy_response_yield_to_maturity {
-        field: secondary_market_buy_order_response_entity.yield_to_maturity
+        field: loan_secondary_market_buy_order_response_entity.yield_to_maturity
       }
 
       #secondary_market_buy_order_entity
       column: buy_order_created {
-        field: secondary_market_buy_order_entity.created_raw
+        field: loan_secondary_market_buy_order_entity.created_raw
       }
     }
 
