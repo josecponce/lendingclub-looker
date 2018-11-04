@@ -50,7 +50,8 @@ view: loan_entity {
 
   dimension: monthly_income_combined {
     type: number
-    sql: GREATEST(${annual_income}, ${annual_income_joint}) ;;
+    value_format: "#"
+    sql: GREATEST(${annual_income}, ${annual_income_joint}) / 12 ;;
   }
 
   dimension: annual_income {
