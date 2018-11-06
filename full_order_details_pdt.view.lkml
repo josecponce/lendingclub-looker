@@ -158,6 +158,10 @@ view: full_order_details_pdt {
         field: loan_entity.annual_income_joint
       }
 
+      column: combined_verification_status {
+        field: loan_entity.combined_verification_status
+      }
+
       derived_column: fico_change_since_loan_orig_low {
         sql: fico_end_range_from - orig_fico_range_low ;;
       }
@@ -389,6 +393,11 @@ view: full_order_details_pdt {
   measure: min_ask_price {
     type: min
     sql: ${TABLE}.min_ask_price ;;
+  }
+
+  dimension: combined_verification_status {
+    type: string
+    sql: ${TABLE}.combined_verification_status ;;
   }
 
   measure: count {

@@ -828,6 +828,11 @@ view: loan_entity {
     sql: ${TABLE}.verification_status_joint ;;
   }
 
+  dimension: combined_verification_status {
+    type: string
+    sql: COALESCE(${verification_status_joint}, ${verification_status}) ;;
+  }
+
   dimension: zip_code {
     type: zipcode
     sql: ${TABLE}.zip_code ;;
