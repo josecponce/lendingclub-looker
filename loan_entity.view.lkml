@@ -586,12 +586,12 @@ view: loan_entity {
     sql: ${TABLE}.policy_code ;;
   }
 
-  dimension: pub_rec {
-    type: string
+  dimension: public_record {
+    type: number
     sql: ${TABLE}.pub_rec ;;
   }
 
-  dimension: pub_rec_bankruptcies {
+  dimension: public_record_bankruptcies {
     type: number
     sql: ${TABLE}.pub_rec_bankruptcies ;;
   }

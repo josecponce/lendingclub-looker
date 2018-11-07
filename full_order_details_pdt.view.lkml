@@ -162,6 +162,10 @@ view: full_order_details_pdt {
         field: loan_entity.combined_verification_status
       }
 
+      column: public_record {
+        field: loan_entity.public_record
+      }
+
       derived_column: fico_change_since_loan_orig_low {
         sql: fico_end_range_from - orig_fico_range_low ;;
       }
@@ -398,6 +402,11 @@ view: full_order_details_pdt {
   dimension: combined_verification_status {
     type: string
     sql: ${TABLE}.combined_verification_status ;;
+  }
+
+  dimension: public_record {
+    type: number
+    sql: ${TABLE}.public_record ;;
   }
 
   measure: count {
