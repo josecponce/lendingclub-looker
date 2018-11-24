@@ -377,6 +377,11 @@ view: loan_entity {
     sql: ${TABLE}.loan_amnt ;;
   }
 
+  dimension: average_monthly_payment_per_25_note {
+    type: number
+    sql: ${installment} / (${loan_amnt} / 25) ;;
+  }
+
   dimension: loan_status {
     type: string
     sql: REPLACE(${TABLE}.loan_status, 'Does not meet the credit policy. Status:', '') ;;
