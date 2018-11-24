@@ -295,7 +295,7 @@ view: loan_entity {
   }
 
   dimension: installment {
-    type: string
+    type: number
     sql: ${TABLE}.installment ;;
   }
 
