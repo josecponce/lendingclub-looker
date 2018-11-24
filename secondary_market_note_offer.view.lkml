@@ -37,6 +37,10 @@ view: secondary_market_note_offer {
 
   dimension: ask_price {
     type: number
+    link: {
+      label: "Buy Now"
+      url: "http://node-3:8080/secondary-trade/buy?loanId={{loan_id._value}}&orderId={{order_id._value}}&noteId={{note_id._value}}&bidPrice={{value}}"
+    }
     sql: ${TABLE}.ask_price ;;
   }
 
