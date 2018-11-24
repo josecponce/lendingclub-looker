@@ -429,7 +429,7 @@ view: loan_entity {
 
   dimension: mths_since_last_major_derog {
     type: number
-    sql: ${TABLE}.mths_since_last_major_derog ;;
+    sql: NULLIF(loan_entity.mths_since_last_major_derog, '') ;;
   }
 
   dimension: mths_since_last_record {
