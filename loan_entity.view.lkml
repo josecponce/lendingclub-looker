@@ -373,7 +373,7 @@ view: loan_entity {
   }
 
   dimension: loan_amnt {
-    type: string
+    type: number
     sql: ${TABLE}.loan_amnt ;;
   }
 
