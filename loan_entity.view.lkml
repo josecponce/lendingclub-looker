@@ -54,14 +54,42 @@ view: loan_entity {
     sql: GREATEST(${annual_income}, ${annual_income_joint}) / 12 ;;
   }
 
+  dimension: payment_percent_of_income_combined {
+    type: number
+    value_format_name: percent_2
+    sql: ${installment} / ${monthly_income_combined} ;;
+  }
+
   dimension: annual_income {
     type: number
     sql: ${TABLE}.annual_inc ;;
   }
 
+  dimension: monthly_income {
+    type: number
+    sql: ${annual_income} / 12 ;;
+  }
+
+  dimension: payment_percent_of_income {
+    type: number
+    value_format_name: percent_2
+    sql: ${installment} / ${monthly_income} ;;
+  }
+
   dimension: annual_income_joint {
     type: number
     sql: ${TABLE}.annual_inc_joint ;;
+  }
+
+  dimension: monthly_income_joint {
+    type: number
+    sql: ${annual_income_joint} ;;
+  }
+
+  dimension: payment_percent_of_income_joint {
+    type: number
+    value_format_name: percent_2
+    sql: ${installment} / ${monthly_income_joint} ;;
   }
 
   dimension: application_type {
