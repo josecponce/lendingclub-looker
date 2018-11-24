@@ -428,7 +428,7 @@ view: loan_entity {
   }
 
   dimension: mths_since_last_major_derog {
-    type: string
+    type: number
     sql: ${TABLE}.mths_since_last_major_derog ;;
   }
 
