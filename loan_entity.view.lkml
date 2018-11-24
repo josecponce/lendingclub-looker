@@ -163,13 +163,15 @@ view: loan_entity {
   }
 
   dimension: dti {
-    type: string
-    sql: ${TABLE}.dti ;;
+    type: number
+    value_format_name: percent_2
+    sql: ${TABLE}.dti / 100;;
   }
 
   dimension: dti_joint {
-    type: string
-    sql: ${TABLE}.dti_joint ;;
+    type: number
+    value_format_name: percent_2
+    sql: ${TABLE}.dti_joint / 100;;
   }
 
   dimension_group: earliest_credit_line {
