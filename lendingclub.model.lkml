@@ -42,17 +42,30 @@ explore: secondary_market_buy_order_entity {
   }
 }
 
-# # Select the views that should be a part of this model,
-# # and define the joins that connect them together.
-#
-# explore: order_items {
-#   join: orders {
-#     relationship: many_to_one
-#     sql_on: ${orders.id} = ${order_items.order_id} ;;
-#   }
-#
-#   join: users {
-#     relationship: many_to_one
-#     sql_on: ${users.id} = ${orders.user_id} ;;
-#   }
-# }
+explore: batch_job_instance {
+  join: batch_job_execution {
+    relationship: one_to_many
+    type: left_outer
+    sql_on: ${batch_job_instance.job_instance_id} = ${batch_job_execution.job_instance_id} ;;
+  }
+  join: batch_job_execution_context {
+    relationship: one_to_one
+    type: left_outer
+    sql_on: ${batch_job_execution.job_execution_id} = ${batch_job_execution_context.job_execution_id} ;;
+  }
+  join: batch_job_execution_params {
+    relationship: one_to_many
+    type: left_outer
+    sql_on: ${batch_job_execution.job_execution_id} = ${batch_job_execution_params.job_execution_id} ;;
+  }
+  join: batch_step_execution {
+    relationship: one_to_many
+    type: left_outer
+    sql_on: ${batch_job_execution.job_execution_id} = ${batch_step_execution.job_execution_id} ;;
+  }
+  join: batch_step_execution_context {
+    relationship: one_to_one
+    type: left_outer
+    sql_on: ${batch_step_execution.step_execution_id} = ${batch_step_execution_context.step_execution_id} ;;
+  }
+}
